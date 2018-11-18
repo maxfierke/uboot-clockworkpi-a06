@@ -13,7 +13,7 @@ license=('GPL')
 backup=('boot/boot.txt' 'boot/boot.scr')
 makedepends=('bc' 'git' 'rockchip-tools' 'swig' 'python2')
 install=${pkgname}.install
-_commit_rkbin=b167a4dca25b159b469fa6f3fb56ce6b54879317
+_commit_rkbin=af17d09dee19b41f4f01e1722eaf6911fb296245
 source=("ftp://ftp.denx.de/pub/u-boot/u-boot-${pkgver/rc/-rc}.tar.bz2"
         "git+https://github.com/rockchip-linux/rkbin.git#commit=$_commit_rkbin"
         'rk3399trust.ini'
@@ -40,8 +40,8 @@ package() {
 
   mkdir -p "${pkgdir}/boot"
 
-  tools/mkimage -n rk3399 -T rksd -d ../rkbin/bin/rk33/rk3399_ddr_933MHz_v1.15.bin "${pkgdir}/boot/idbloader.img"
-  cat ../rkbin/bin/rk33/rk3399_miniloader_v1.15.bin >> "${pkgdir}/boot/idbloader.img"
+  tools/mkimage -n rk3399 -T rksd -d ../rkbin/rk33/rk3399_ddr_933MHz_v1.13.bin "${pkgdir}/boot/idbloader.img"
+  cat ../rkbin/rk33/rk3399_miniloader_v1.12.bin >> "${pkgdir}/boot/idbloader.img"
 
   loaderimage --pack --uboot u-boot-dtb.bin "${pkgdir}/boot/uboot.img" 0x200000
 
