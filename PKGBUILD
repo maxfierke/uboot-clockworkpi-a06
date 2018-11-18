@@ -5,7 +5,7 @@ buildarch=8
 
 pkgname=uboot-rockpro64
 pkgver=2018.11
-pkgrel=1
+pkgrel=2
 pkgdesc="U-Boot for RockPro64"
 arch=('aarch64')
 url='http://www.denx.de/wiki/U-Boot/WebHome'
@@ -21,7 +21,7 @@ source=("ftp://ftp.denx.de/pub/u-boot/u-boot-${pkgver/rc/-rc}.tar.bz2"
         'mkscr')
 md5sums=('80604e79f64517afadccb02f3c55a6cb'
          'SKIP'
-         'eb9857435ee6533317176c41e008c0cc'
+         '28c954c6d6a53aa7e1b1d1a342d669db'
          'b2ef68941641943687da6e4698e9184f'
          '021623a04afd29ac3f368977140cfbfd')
 
