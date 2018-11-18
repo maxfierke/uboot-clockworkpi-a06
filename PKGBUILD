@@ -5,6 +5,7 @@ buildarch=8
 
 pkgname=uboot-rockpro64
 pkgver=2018.11
+_gitname=linux-u-boot
 pkgrel=1
 pkgdesc="U-Boot for RockPro64"
 arch=('aarch64')
@@ -13,21 +14,22 @@ license=('GPL')
 backup=('boot/boot.txt' 'boot/boot.scr')
 makedepends=('bc' 'git' 'rockchip-tools' 'swig' 'python2')
 install=${pkgname}.install
+_commit_uboot=d646df03ace3bd191e24361944ce1c7ef3c8744c
 _commit_rkbin=af17d09dee19b41f4f01e1722eaf6911fb296245
-source=("ftp://ftp.denx.de/pub/u-boot/u-boot-${pkgver/rc/-rc}.tar.bz2"
+source=("git+https://github.com/ayufan-rock64/linux-u-boot.git#commit=$_commit_uboot"
         "git+https://github.com/ayufan-rock64/rkbin.git#commit=$_commit_rkbin"
         'rk3399trust.ini'
         'boot.txt'
         'mkscr')
-md5sums=('80604e79f64517afadccb02f3c55a6cb'
+md5sums=('SKIP'
          'SKIP'
          'eb9857435ee6533317176c41e008c0cc'
          'b2ef68941641943687da6e4698e9184f'
          '021623a04afd29ac3f368977140cfbfd')
 
 build() {
-  cd u-boot-${pkgver/rc/-rc}
-  sed -i s/"export MAKE LEX YACC AWK PERL PYTHON PYTHON2 PYTHON3"/"export MAKE LEX YACC AWK PERL PYTHON2 PYTHON3"/ Makefile
+  cd ${srcdir}/${_gitname}
+  sed -i s/"PYTHON	?= python"/"PYTHON	?= python2"/ Makefile
   unset CLFAGS CXXFLAGS CPPFLAGS LDFLAGS
 
   make evb-rk3399_defconfig
@@ -36,7 +38,7 @@ build() {
 }
 
 package() {
-  cd u-boot-${pkgver/rc/-rc}
+  cd ${srcdir}/${_gitname}
 
   mkdir -p "${pkgdir}/boot"
 
