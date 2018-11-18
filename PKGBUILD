@@ -15,7 +15,7 @@ makedepends=('bc' 'git' 'rockchip-tools' 'swig' 'python2')
 install=${pkgname}.install
 _commit_rkbin=af17d09dee19b41f4f01e1722eaf6911fb296245
 source=("ftp://ftp.denx.de/pub/u-boot/u-boot-${pkgver/rc/-rc}.tar.bz2"
-        "git+https://github.com/rockchip-linux/rkbin.git#commit=$_commit_rkbin"
+        "git+https://github.com/ayufan-rock64/rkbin.git#commit=$_commit_rkbin"
         'rk3399trust.ini'
         'boot.txt'
         'mkscr')
