@@ -28,11 +28,13 @@ sha256sums=('737c93f2ea03fec669e840dbee32bcf6238e6924ff5f20e4f1c472ee24e5d37e'
             'eae1e38c955c33fa33dfd1151eb88d7e5167089b7b137a91ea747e1fd8dafe1b')
 
 prepare() {
-  cp evb-rk3399_defconfig configs/
+  cp evb-rk3399_defconfig u-boot-${pkgver/rc/-rc}/configs/
 }
 
 build() {
   cd u-boot-${pkgver/rc/-rc}
+  sed -i s/"export MAKE LEX YACC AWK PERL PYTHON PYTHON2 PYTHON3"/"export MAKE LEX YACC AWK PERL PYTHON2 PYTHON3"/ Makefile
+
 
   unset CLFAGS CXXFLAGS CPPFLAGS LDFLAGS
 
