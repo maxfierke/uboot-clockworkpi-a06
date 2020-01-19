@@ -5,14 +5,14 @@
 
 pkgname=uboot-rockpro64
 pkgver=2020.01
-pkgrel=1
+pkgrel=2
 pkgdesc="U-Boot for RockPro64"
 arch=('aarch64')
 url='http://www.denx.de/wiki/U-Boot/WebHome'
 license=('GPL')
 backup=('boot/boot.txt' 'boot/boot.scr')
 depends=('uboot-tools')
-makedepends=('git' 'arm-none-eabi-gcc' 'dtc')
+makedepends=('git' 'arm-none-eabi-gcc' 'dtc' 'bc')
 install=${pkgname}.install
 _commit_atf=22d12c4148c373932a7a81e5d1c59a767e143ac2
 source=("ftp://ftp.denx.de/pub/u-boot/u-boot-${pkgver/rc/-rc}.tar.bz2"
