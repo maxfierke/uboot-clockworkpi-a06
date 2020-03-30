@@ -5,7 +5,7 @@
 
 pkgname=uboot-rockpro64
 pkgver=2020.01
-pkgrel=4
+pkgrel=5
 pkgdesc="U-Boot for RockPro64"
 arch=('aarch64')
 url='http://www.denx.de/wiki/U-Boot/WebHome'
@@ -19,7 +19,7 @@ source=("ftp://ftp.denx.de/pub/u-boot/u-boot-${pkgver/rc/-rc}.tar.bz2"
         'extlinux.conf')
 sha256sums=('aa453c603208b1b27bd03525775a7f79b443adec577fdc6e8f06974025a135f1'
             'SKIP'
-            'fd1fc35fd56e5e889d0a84843144ddb03119b1e708574606409a2e59ccf74c4e')
+            'c99eb08d881056f15027d260909cb4c8a11b63fe3d272fe754a8b01d92601afa')
 
 build() {
   cd arm-trusted-firmware
