@@ -1,0 +1,9 @@
+build-package:
+  tags:
+    - aarch64
+  script:
+    - sudo pacman -Syu --noconfirm && makepkg -scr --noconfirm
+  artifacts:
+    paths:
+    - ./*.pkg.tar.*
+    expire_in: 1 week
