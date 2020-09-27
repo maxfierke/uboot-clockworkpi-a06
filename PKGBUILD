@@ -5,7 +5,7 @@
 
 pkgname=uboot-rockpro64
 pkgver=2020.07
-pkgrel=1
+pkgrel=2
 _tfaver=2.3
 pkgdesc="U-Boot for RockPro64"
 arch=('aarch64')
@@ -32,8 +32,6 @@ build() {
   unset CFLAGS CXXFLAGS CPPFLAGS LDFLAGS
   make rockpro64-rk3399_defconfig
   echo 'CONFIG_IDENT_STRING=" Manjaro ARM"' >> .config
-  echo 'CONFIG_MMC_HS200_SUPPORT=y' >> .config
-  echo 'CONFIG_SPL_MMC_HS200_SUPPORT=y' >> .config
   make EXTRAVERSION=-${pkgrel} all u-boot.itb
 }
 
