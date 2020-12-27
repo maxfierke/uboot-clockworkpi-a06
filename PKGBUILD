@@ -5,7 +5,7 @@
 
 pkgname=uboot-rockpro64
 pkgver=2020.10
-pkgrel=1
+pkgrel=2
 _tfaver=2.3
 pkgdesc="U-Boot for RockPro64"
 arch=('aarch64')
@@ -30,6 +30,7 @@ build() {
   unset CFLAGS CXXFLAGS CPPFLAGS LDFLAGS
   make rockpro64-rk3399_defconfig
   echo 'CONFIG_IDENT_STRING=" Manjaro ARM"' >> .config
+  echo 'CONFIG_USE_PREBOOT=n' >> .config #disables usb boot, but should make it boot every time
   make EXTRAVERSION=-${pkgrel} all u-boot.itb
 }
 
