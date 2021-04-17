@@ -17,7 +17,7 @@ post_install() {
   echo "LABEL Manjaro ARM
 KERNEL /Image
 FDT /dtbs/rockchip/rk3399-rockpro64.dtb
-APPEND initrd=/initramfs-linux.img console=tty1 console=ttyS2,1500000 root=LABEL=ROOT_MNJRO rw rootwait bootsplash.bootfile=bootsplash-themes/manjaro/bootsplash" > /boot/extlinux/extlinux.conf
+APPEND initrd=/initramfs-linux.img console=tty1 console=ttyS2,1500000 root=LABEL=ROOT_MNJRO rw rootwait quiet splash plymouth.ignore-serial-consoles" > /boot/extlinux/extlinux.conf
   fi
 }
 
@@ -33,6 +33,6 @@ post_upgrade() {
   echo "LABEL Manjaro ARM
 KERNEL /Image
 FDT /dtbs/rockchip/rk3399-rockpro64.dtb
-APPEND initrd=/initramfs-linux.img console=tty1 console=ttyS2,1500000 root=LABEL=ROOT_MNJRO rw rootwait bootsplash.bootfile=bootsplash-themes/manjaro/bootsplash" > /boot/extlinux/extlinux.conf
+APPEND initrd=/initramfs-linux.img console=tty1 console=ttyS2,1500000 root=LABEL=ROOT_MNJRO rw rootwait quiet splash plymouth.ignore-serial-consoles" > /boot/extlinux/extlinux.conf
   fi
 }
