@@ -5,7 +5,7 @@
 
 pkgname=uboot-rockpro64
 pkgver=2021.07
-pkgrel=2
+pkgrel=3
 _tfaver=2.5
 pkgdesc="U-Boot for RockPro64"
 arch=('aarch64')
@@ -18,14 +18,17 @@ conflicts=('uboot')
 install=${pkgname}.install
 source=("ftp://ftp.denx.de/pub/u-boot/u-boot-${pkgver/rc/-rc}.tar.bz2"
         "https://git.trustedfirmware.org/TF-A/trusted-firmware-a.git/snapshot/trusted-firmware-a-$_tfaver.tar.gz"
-        "0001-fix-rk3399-suspend-correct-LPDDR4-resume-sequence.patch")
+        "0001-fix-rk3399-suspend-correct-LPDDR4-resume-sequence.patch"
+        "0002-fix-rockchip-rk3399-fix-dram-section-placement.patch")
 sha256sums=('312b7eeae44581d1362c3a3f02c28d806647756c82ba8c72241c7cdbe68ba77e'
             'ad8a2ffcbcd12d919723da07630fc0840c3c2fba7656d1462e45488e42995d7c'
-            '2cd375c5456e914208eb1b36adb4e78ee529bdd847958fb518a9a1be5b078b12')
+            '2cd375c5456e914208eb1b36adb4e78ee529bdd847958fb518a9a1be5b078b12'
+            '52c3641b59422cb4174ac5c0c1d8617917ac05472d0d0a3437db128c077673fb')
 
 prepare() {
   cd trusted-firmware-a-$_tfaver
-  patch -Np1 -i "${srcdir}/0001-fix-rk3399-suspend-correct-LPDDR4-resume-sequence.patch"    #Fix suspend
+  patch -Np1 -i "${srcdir}/0001-fix-rk3399-suspend-correct-LPDDR4-resume-sequence.patch"    #Suspend
+  patch -Np1 -i "${srcdir}/0002-fix-rockchip-rk3399-fix-dram-section-placement.patch"       #GCC 11 fix
 }
 
 build() {
