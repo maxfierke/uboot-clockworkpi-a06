@@ -24,7 +24,7 @@ sha256sums=('cde723e19262e646f2670d25e5ec4b1b368490de950d4e26275a988c36df0bd4'
             'ad8a2ffcbcd12d919723da07630fc0840c3c2fba7656d1462e45488e42995d7c'
             '2cd375c5456e914208eb1b36adb4e78ee529bdd847958fb518a9a1be5b078b12'
             '52c3641b59422cb4174ac5c0c1d8617917ac05472d0d0a3437db128c077673fb'
-            '8d65b0b7717570b8ba0f64d35a89b073782c91498dfe7a2ad7d09475e6bd292d')
+            '0454fe63977aac5cdd9a0051c5a240d764b4fdbcda4aeea9d3ee319a8dc8a0fa')
 
 prepare() {
   # Why doesn't this untar automatically?

@@ -10,7 +10,7 @@ create_config() {
   echo "LABEL Manjaro ARM
 KERNEL /Image
 FDT /dtbs/rockchip/rk3399-clockworkpi-a06.dtb
-APPEND initrd=/initramfs-linux.img console=ttyS2,1500000 root=LABEL=ROOT_MNJRO rw rootwait quiet splash plymouth.ignore-serial-consoles fbcon=rotate:1" > /boot/extlinux/extlinux.conf
+APPEND initrd=/initramfs-linux.img console=ttyS2,115200 root=LABEL=ROOT_MNJRO rw rootwait quiet splash plymouth.ignore-serial-consoles fbcon=rotate:1" > /boot/extlinux/extlinux.conf
 }
 
 post_install() {
