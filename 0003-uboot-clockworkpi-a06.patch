@@ -15,7 +15,7 @@ new file mode 100644
 index 00000000..9717c1c7
 --- /dev/null
 +++ b/arch/arm/dts/rk3399-clockworkpi-a06.dts
-@@ -0,0 +1,165 @@
+@@ -0,0 +1,163 @@
 +/*
 + * (C) Copyright 2016 Rockchip Electronics Co., Ltd
 + *
@@ -140,7 +140,6 @@ index 00000000..9717c1c7
 +	clock-frequency = <400000>;
 +	i2c-scl-falling-time-ns = <50>;
 +	i2c-scl-rising-time-ns = <100>;
-+	u-boot,dm-pre-reloc;
 +
 +	rk808: pmic@1b {
 +		compatible = "rockchip,rk808";
@@ -152,7 +151,6 @@ index 00000000..9717c1c7
 +		reg = <0x1b>;
 +		rockchip,system-power-controller;
 +		#clock-cells = <1>;
-+		u-boot,dm-pre-reloc;
 +		status = "okay";
 +
 +		vcc12-supply = <&vcc3v3_sys>;
@@ -181,12 +179,42 @@ index 00000000..9717c1c7
 +	};
 +};
 +
+diff --git a/arch/arm/dts/rk3399-clockworkpi-a06-u-boot.dtsi b/arch/arm/dts/rk3399-clockworkpi-a06-u-boot.dtsi
+new file mode 100644
+index 00000000..9717c1c7
+--- /dev/null
++++ b/arch/arm/dts/rk3399-clockworkpi-a06-u-boot.dtsi	2021-11-26 09:29:44.711123841 -0600
+@@ -0,0 +1,24 @@
++// SPDX-License-Identifier: GPL-2.0+
++
++#include "rk3399-u-boot.dtsi"
++#include "rk3399-sdram-lpddr3-4GB-1600.dtsi"
++
++/ {
++	chosen {
++		stdout-path = "serial2:115200n8";
++		u-boot,spl-boot-order = "same-as-spl", &sdhci, &sdmmc;
++	};
++};
++
++&i2c0 {
++	u-boot,dm-pre-reloc;
++};
++
++&rk808 {
++	u-boot,dm-pre-reloc;
++};
++
++&sdmmc {
++	u-boot,dm-pre-reloc;
++};
++
 diff --git a/configs/clockworkpi-a06-rk3399_defconfig b/configs/clockworkpi-a06-rk3399_defconfig
 new file mode 100644
 index 00000000..d2003073
 --- /dev/null
 +++ b/configs/clockworkpi-a06-rk3399_defconfig
-@@ -0,0 +1,53 @@
+@@ -0,0 +1,52 @@
 +CONFIG_ARM=y
 +CONFIG_ARCH_ROCKCHIP=y
 +CONFIG_SYS_TEXT_BASE=0x00200000
@@ -224,7 +252,6 @@ index 00000000..d2003073
 +CONFIG_MMC_SDHCI_ROCKCHIP=y
 +CONFIG_PMIC_RK8XX=y
 +CONFIG_REGULATOR_RK8XX=y
-+CONFIG_RAM_RK3399_LPDDR4=y
 +CONFIG_BAUDRATE=115200
 +CONFIG_DEBUG_UART_SHIFT=2
 +CONFIG_SYSRESET=y
