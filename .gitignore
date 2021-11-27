@@ -1,5 +1,8 @@
 /src/
 /pkg/
+/rkbin/
+/u-boot-*/
+u-boot-dtb.bin
 *.tar.gz
 *.tar.bz2
 *.tar.zst

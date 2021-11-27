@@ -1,60 +1,71 @@
-# U-Boot: ClockworkPI A06 based on PKGBUILD for RockPro64
-# Maintainer: Dan Johansen <strit@manjaro.org>
-# Contributor: Kevin Mihelich
-# Contributor: Adam <adam900710@gmail.com>
+# U-Boot: ClockworkPI A06
+# Based on PKGBUILD for pinebookpro: https://gitlab.manjaro.org/manjaro-arm/packages/core/uboot-pinebookpro-bsp
+# Maintainer (this port): Max Fierke
+# Maintainer (upstream): Dan Johansen <strit@manjaro.org>
 
 pkgname=uboot-clockworkpi-a06
 pkgver=2021.10
 pkgrel=1
-_tfaver=2.5
-pkgdesc="U-Boot for ClockworkPI A06"
+pkgdesc="U-Boot for ClockworkPI A06 (rockchip blobs, upstream u-boot)"
 arch=('aarch64')
 url='http://www.denx.de/wiki/U-Boot/WebHome'
 license=('GPL')
-makedepends=('git' 'arm-none-eabi-gcc' 'dtc' 'bc')
 provides=('uboot')
 conflicts=('uboot')
 install=${pkgname}.install
-source=("https://ftp.denx.de/pub/u-boot/u-boot-${pkgver/rc/-rc}.tar.bz2"
-        "https://git.trustedfirmware.org/TF-A/trusted-firmware-a.git/snapshot/trusted-firmware-a-$_tfaver.tar.gz"
-        "0001-fix-rk3399-suspend-correct-LPDDR4-resume-sequence.patch"
-        "0002-fix-rockchip-rk3399-fix-dram-section-placement.patch"
-        "0003-uboot-clockworkpi-a06.patch")
-sha256sums=('cde723e19262e646f2670d25e5ec4b1b368490de950d4e26275a988c36df0bd4'
-            'ad8a2ffcbcd12d919723da07630fc0840c3c2fba7656d1462e45488e42995d7c'
-            '2cd375c5456e914208eb1b36adb4e78ee529bdd847958fb518a9a1be5b078b12'
-            '52c3641b59422cb4174ac5c0c1d8617917ac05472d0d0a3437db128c077673fb'
-            '1cb4e4e5fd9bcbfa1b7060100c6f636b9976de1ee5132cc482f6973e4ca76351')
+# TODO: do this all via qemu-x86_64 on aarch64
+# makedepends=('git' 'arm-none-eabi-gcc' 'dtc' 'bc')
+# source=("https://ftp.denx.de/pub/u-boot/u-boot-${pkgver/rc/-rc}.tar.bz2"
+#         "rkbin::git+https://github.com/rockchip-linux/rkbin.git#commit=7d631e0d5b2d373b54d4533580d08fb9bd2eaad4"
+#         "0001-uboot-clockworkpi-a06.patch")
+# sha256sums=('cde723e19262e646f2670d25e5ec4b1b368490de950d4e26275a988c36df0bd4'
+#             'SKIP'
+#             'b82c97b89bc667bdd36327c834543bbf83dcdbf5aac016358a2e7c6cee2a1e2e')
+makedepends=()
+source=("uboot.img"
+        "trust.img"
+        "idbloader.img")
+sha256sums=("8dabad0aa8356cd5617a5c8e33efa47517fb483296798175ba16ed34f7617583"
+            "c82b6b7ea2160c7bdedcd5048b479bb5028434e0811c125fbc2b0080543a6f32"
+            "e62f8c6d1661450ffe3c46847bcd6c880ac405c0730028eddde958b58982ebd5")
 
-prepare() {
-  # Why doesn't this untar automatically?
-  if [ ! -d "u-boot-${pkgver/rc/-rc}" ]; then
-    tar -xf u-boot-${pkgver/rc/-rc}.tar
-  fi
+#prepare() {
+#  # Why doesn't this untar automatically?
+#  if [ ! -d "u-boot-${pkgver/rc/-rc}" ]; then
+#    tar -xf u-boot-${pkgver/rc/-rc}.tar
+#  fi
+#
+#  cd "${srcdir}/u-boot-${pkgver/rc/-rc}"
+#  patch -Np1 -i "${srcdir}/0001-uboot-clockworkpi-a06.patch"
+#}
 
-  cd trusted-firmware-a-$_tfaver
-  patch -Np1 -i "${srcdir}/0001-fix-rk3399-suspend-correct-LPDDR4-resume-sequence.patch"    #Suspend
-  patch -Np1 -i "${srcdir}/0002-fix-rockchip-rk3399-fix-dram-section-placement.patch"       #GCC 11 fix
-  cd ../u-boot-${pkgver/rc/-rc}
-  patch -Np1 -i "${srcdir}/0003-uboot-clockworkpi-a06.patch"
-}
+# build() {
+  # Build idbloader.img
+  # cd "${srcdir}"
+  # rkbin/tools/mkimage -n rk3399 -T rksd -d rk3399_ddr_800MHz_v1.25.bin idbloader.img
+  # cat rkbin/bin/rk33/rk3399_miniloader_v1.26.bin >> idbloader.img
 
-build() {
-  cd trusted-firmware-a-$_tfaver
-  unset CFLAGS CXXFLAGS CPPFLAGS LDFLAGS
-  make PLAT=rk3399
-  cp build/rk3399/release/bl31/bl31.elf ../u-boot-${pkgver/rc/-rc}
-  cd ../u-boot-${pkgver/rc/-rc}
-  unset CFLAGS CXXFLAGS CPPFLAGS LDFLAGS
-  make clockworkpi-a06-rk3399_defconfig
-  echo 'CONFIG_IDENT_STRING=" Manjaro ARM"' >> .config
-  make EXTRAVERSION=-${pkgrel} all u-boot.itb
-}
+  # Build trust.img
+  # cd rkbin/
+  # tools/trust_merger RKTRUST/RK3399TRUST.ini
+  # mv trust.img ../
+
+  # Build u-boot-dtb.bin
+  # cd ../u-boot-${pkgver/rc/-rc}
+  # unset CFLAGS CXXFLAGS CPPFLAGS LDFLAGS
+  # make clockworkpi-a06-rk3399_defconfig
+  # echo 'CONFIG_IDENT_STRING=" Manjaro ARM"' >> .config
+  # make EXTRAVERSION=-${pkgrel} all
+  # cd ../
+
+  # Build u-boot.img
+  # rkbin/tools/loaderimage --pack --uboot "u-boot-${pkgver/rc/-rc}/u-boot-dtb.bin" "u-boot-${pkgver/rc/-rc}/uboot.img" 0x200000
+# }
 
 package() {
-  cd u-boot-${pkgver/rc/-rc}
+  # cd u-boot-${pkgver/rc/-rc}
 
   mkdir -p "${pkgdir}/boot/extlinux"
 
-  cp u-boot.itb idbloader.img "${pkgdir}/boot"
+  cp uboot.img trust.img idbloader.img "${pkgdir}/boot"
 }

@@ -1,8 +1,9 @@
 notice_uboot() {
-  echo "New version of U-Boot firmware can be flashed to your microSD card (mmcblk0)"
+  echo "New version of U-Boot firmware can be flashed to your microSD card (mmcblk1)"
   echo "You can do that by running:"
-  echo "# dd if=/boot/idbloader.img of=/dev/mmcblk0 seek=64 conv=notrunc,fsync"
-  echo "# dd if=/boot/u-boot.itb of=/dev/mmcblk0 seek=16384 conv=notrunc,fsync"
+  echo "# dd if=/boot/idbloader.img of=/dev/mmcblk1 seek=64 conv=notrunc,fsync"
+  echo "# dd if=/boot/uboot.img of=/dev/mmcblk1 seek=16384 conv=notrunc,fsync"
+  echo "# dd if=/boot/trust.img of=/dev/mmcblk1 seek=24576 conv=notrunc,fsync"
 }
 
 create_config() {
