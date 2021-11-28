@@ -33,7 +33,7 @@ index 00000000..9717c1c7
 +	compatible = "clockwork,devterm-a06", "rockchip,rk3399";
 +
 +	chosen {
-+		stdout-path = "serial2:115200n8";
++		stdout-path = "serial2:1500000n8";
 +	};
 +
 +	vdd_center: vdd-center {
@@ -227,7 +227,7 @@ index 00000000..d2003073
 +CONFIG_REGULATOR_RK8XX=y
 +CONFIG_RAM_RK3399_LPDDR4=y
 +CONFIG_RAM_ROCKCHIP_DEBUG=y
-+CONFIG_BAUDRATE=115200
++CONFIG_BAUDRATE=1500000
 +CONFIG_DEBUG_UART_SHIFT=2
 +CONFIG_SYSRESET=y
 +CONFIG_USB=y
