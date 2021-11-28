@@ -22,12 +22,20 @@ install=${pkgname}.install
 #             'SKIP'
 #             'b82c97b89bc667bdd36327c834543bbf83dcdbf5aac016358a2e7c6cee2a1e2e')
 makedepends=()
-source=("uboot.img"
+source=("idbloader.img"
+        "uboot.img"
         "trust.img"
-        "idbloader.img")
-sha256sums=("8dabad0aa8356cd5617a5c8e33efa47517fb483296798175ba16ed34f7617583"
+        "u-boot-dtb.bin"
+        "boot.scr"
+        "boot.txt"
+        )
+sha256sums=("966698f160623f1d469bad96410c1a645614176a6ea341092ca696cf47a49b72"
+            "8dabad0aa8356cd5617a5c8e33efa47517fb483296798175ba16ed34f7617583"
             "c82b6b7ea2160c7bdedcd5048b479bb5028434e0811c125fbc2b0080543a6f32"
-            "e62f8c6d1661450ffe3c46847bcd6c880ac405c0730028eddde958b58982ebd5")
+            "c22c2e894028519a46c313127c265b67678a24e832cfc30fbb884e0f12f283c0"
+            "2838632ac8e2484dd222dd1d7ba73b691743a070a3ca3a9ee1d062e4686fee41"
+            "3fd2462c877d7a2258132d746a3213c1befe1320fb378bee52670d54fd9dc953"
+            )
 
 #prepare() {
 #  # Why doesn't this untar automatically?
@@ -67,5 +75,5 @@ package() {
 
   mkdir -p "${pkgdir}/boot/extlinux"
 
-  cp uboot.img trust.img idbloader.img "${pkgdir}/boot"
+  cp uboot.img trust.img idbloader.img u-boot-dtb.bin boot.scr boot.txt "${pkgdir}/boot"
 }
