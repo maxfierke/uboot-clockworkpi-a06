@@ -26,7 +26,7 @@ cd u-boot-2021.10
 patch -Np1 -i ../0001-uboot-clockworkpi-a06.patch
 make clockworkpi-a06-rk3399_defconfig
 echo 'CONFIG_IDENT_STRING=" Manjaro ARM"' >> .config
-make EXTRAVERSION=-${pkgrel} all
+make EXTRAVERSION=-1 all
 ```
 
 ## Build `idbloader.img`
@@ -43,11 +43,4 @@ cat ../rkbin/bin/rk33/rk3399_miniloader_v1.26.bin >> ../idbloader.img
 git clone https://github.com/rockchip-linux/rkbin.git
 rkbin/tools/loaderimage --pack --uboot u-boot-2021.10/u-boot-dtb.bin uboot.img 0x200000
 cp u-boot-2021.10/u-boot-dtb.bin .
-```
-
-## Build `boot.scr` from `boot.txt`
-
-```bash
-cd u-boot-2021.10
-tools/mkimage -A arm -O linux -T script -C none -n "U-Boot boot script" -d ../boot.txt ../boot.scr
 ```
