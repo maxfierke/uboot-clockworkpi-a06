@@ -26,15 +26,11 @@ source=("idbloader.img"
         "uboot.img"
         "trust.img"
         "u-boot-dtb.bin"
-        "boot.scr"
-        "boot.txt"
         )
 sha256sums=("966698f160623f1d469bad96410c1a645614176a6ea341092ca696cf47a49b72"
             "59d41d72e6dba94f15e52d9888f9cef394e2ddde4291ff7b2a683188cd5fed71"
             "c82b6b7ea2160c7bdedcd5048b479bb5028434e0811c125fbc2b0080543a6f32"
             "b92e5a5e7cdcda0268128c11acd88ba22fb4a22c2b5c54b426e2633c97fecac9"
-            "700be00fc2129f867273216b7a6ae19bedc18d5f4a6915c68626293240e08ae2"
-            "3fd2462c877d7a2258132d746a3213c1befe1320fb378bee52670d54fd9dc953"
             )
 
 #prepare() {
@@ -75,5 +71,5 @@ package() {
 
   mkdir -p "${pkgdir}/boot/extlinux"
 
-  cp uboot.img trust.img idbloader.img u-boot-dtb.bin boot.scr boot.txt "${pkgdir}/boot"
+  cp uboot.img trust.img idbloader.img u-boot-dtb.bin "${pkgdir}/boot"
 }
