@@ -24,6 +24,8 @@ wget https://ftp.denx.de/pub/u-boot/u-boot-2021.10.tar.bz2
 tar -xf u-boot-2021.10.tar.bz2
 cd u-boot-2021.10
 patch -Np1 -i ../0001-uboot-clockworkpi-a06.patch
+patch -Np1 -i ../0002-rk3399-always-init-rkclk.patch
+patch -Np1 -i ../0003-rk3399-populate-child-node-of-syscon.patch
 make clockworkpi-a06-rk3399_defconfig
 echo 'CONFIG_IDENT_STRING=" Manjaro ARM"' >> .config
 make EXTRAVERSION=-1 all
