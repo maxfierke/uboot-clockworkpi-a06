@@ -24,7 +24,7 @@ sha256sums=('cde723e19262e646f2670d25e5ec4b1b368490de950d4e26275a988c36df0bd4'
             'ad8a2ffcbcd12d919723da07630fc0840c3c2fba7656d1462e45488e42995d7c'
             '2cd375c5456e914208eb1b36adb4e78ee529bdd847958fb518a9a1be5b078b12'
             '52c3641b59422cb4174ac5c0c1d8617917ac05472d0d0a3437db128c077673fb'
-            '4f53d757c3fbb0436b7936a4ee18ce001637058e3fc9be6e7b9e73b6811e6d8d')
+            '8b6d3477be3fc2832775ee6eaa12769e650b05efaac52a22dacfb72cac7c6a04')
 
 prepare() {
   # Why doesn't this untar automatically?
@@ -36,7 +36,7 @@ prepare() {
   patch -Np1 -i "${srcdir}/0001-fix-rk3399-suspend-correct-LPDDR4-resume-sequence.patch"    #Suspend
   patch -Np1 -i "${srcdir}/0002-fix-rockchip-rk3399-fix-dram-section-placement.patch"       #GCC 11 fix
   cd ../u-boot-${pkgver/rc/-rc}
-  patch -Np1 -i "${srcdir}/0003-uboot-clockworkpi-a06.patch"
+  patch -Np1 -i "${srcdir}/blubb.patch"
 }
 
 build() {
