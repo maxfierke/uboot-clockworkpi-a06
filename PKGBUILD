@@ -6,7 +6,7 @@
 pkgname=uboot-clockworkpi-a06
 pkgver=2021.10
 pkgrel=1
-_tfaver=2.5
+_tfaver=2.6
 pkgdesc="U-Boot for ClockworkPI A06"
 arch=('aarch64')
 url='http://www.denx.de/wiki/U-Boot/WebHome'
@@ -17,13 +17,9 @@ conflicts=('uboot')
 install=${pkgname}.install
 source=("https://ftp.denx.de/pub/u-boot/u-boot-${pkgver/rc/-rc}.tar.bz2"
         "https://git.trustedfirmware.org/TF-A/trusted-firmware-a.git/snapshot/trusted-firmware-a-$_tfaver.tar.gz"
-        "0001-fix-rk3399-suspend-correct-LPDDR4-resume-sequence.patch"
-        "0002-fix-rockchip-rk3399-fix-dram-section-placement.patch"
         "0003-uboot-clockworkpi-a06.patch")
 sha256sums=('cde723e19262e646f2670d25e5ec4b1b368490de950d4e26275a988c36df0bd4'
-            'ad8a2ffcbcd12d919723da07630fc0840c3c2fba7656d1462e45488e42995d7c'
-            '2cd375c5456e914208eb1b36adb4e78ee529bdd847958fb518a9a1be5b078b12'
-            '52c3641b59422cb4174ac5c0c1d8617917ac05472d0d0a3437db128c077673fb'
+            '4e59f02ccb042d5d18c89c849701b96e6cf4b788709564405354b5d313d173f7'
             '8b6d3477be3fc2832775ee6eaa12769e650b05efaac52a22dacfb72cac7c6a04')
 
 prepare() {
@@ -32,11 +28,8 @@ prepare() {
     tar -xf u-boot-${pkgver/rc/-rc}.tar
   fi
 
-  cd trusted-firmware-a-$_tfaver
-  patch -Np1 -i "${srcdir}/0001-fix-rk3399-suspend-correct-LPDDR4-resume-sequence.patch"    #Suspend
-  patch -Np1 -i "${srcdir}/0002-fix-rockchip-rk3399-fix-dram-section-placement.patch"       #GCC 11 fix
-  cd ../u-boot-${pkgver/rc/-rc}
-  patch -Np1 -i "${srcdir}/blubb.patch"
+  cd ./u-boot-${pkgver/rc/-rc}
+  patch -Np1 -i "${srcdir}/0003-uboot-clockworkpi-a06.patch"
 }
 
 build() {
