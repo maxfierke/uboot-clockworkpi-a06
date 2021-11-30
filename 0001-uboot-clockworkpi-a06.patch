@@ -23,7 +23,7 @@ index 00000000..495573e0
 +
 +/ {
 +	chosen {
-+		stdout-path = "serial2:115200n8";
++		stdout-path = "serial2:150000n8";
 +		u-boot,spl-boot-order = "same-as-spl", &sdhci, &sdmmc;
 +	};
 +};
@@ -45,7 +45,7 @@ new file mode 100644
 index 00000000..8357d05f
 --- /dev/null
 +++ b/arch/arm/dts/rk3399-clockworkpi-a06.dts
-@@ -0,0 +1,166 @@
+@@ -0,0 +1,163 @@
 +/*
 + * (C) Copyright 2016 Rockchip Electronics Co., Ltd
 + *
@@ -135,7 +135,6 @@ index 00000000..8357d05f
 +&sdmmc {
 +	bus-width = <4>;
 +	status = "okay";
-+	u-boot,dm-pre-reloc;
 +};
 +
 +&sdhci {
@@ -171,7 +170,6 @@ index 00000000..8357d05f
 +	clock-frequency = <400000>;
 +	i2c-scl-falling-time-ns = <50>;
 +	i2c-scl-rising-time-ns = <100>;
-+	u-boot,dm-pre-reloc;
 +
 +	rk808: pmic@1b {
 +		compatible = "rockchip,rk808";
@@ -184,7 +182,6 @@ index 00000000..8357d05f
 +		rockchip,system-power-controller;
 +		#clock-cells = <1>;
 +		status = "okay";
-+		u-boot,dm-pre-reloc;
 +
 +		vcc12-supply = <&vcc3v3_sys>;
 +
@@ -217,7 +214,7 @@ new file mode 100644
 index 00000000..826139c1
 --- /dev/null
 +++ b/configs/clockworkpi-a06-rk3399_defconfig
-@@ -0,0 +1,55 @@
+@@ -0,0 +1,54 @@
 +CONFIG_ARM=y
 +CONFIG_ARCH_ROCKCHIP=y
 +CONFIG_SYS_TEXT_BASE=0x00200000
@@ -257,7 +254,7 @@ index 00000000..826139c1
 +CONFIG_REGULATOR_RK8XX=y
 +CONFIG_RAM_RK3399_LPDDR4=y
 +CONFIG_RAM_ROCKCHIP_DEBUG=y
-+CONFIG_BAUDRATE=115200
++CONFIG_BAUDRATE=1500000
 +CONFIG_DEBUG_UART_SHIFT=2
 +CONFIG_SYSRESET=y
 +CONFIG_USB=y
@@ -272,14 +269,3 @@ index 00000000..826139c1
 +CONFIG_DISPLAY_ROCKCHIP_HDMI=y
 +CONFIG_SPL_TINY_MEMSET=y
 +CONFIG_ERRNO_STR=y
-diff --git a/drivers/ram/rockchip/sdram_rk3399.c b/drivers/ram/rockchip/sdram_rk3399.c
-index a83a670b..c52f1292 100644
---- a/drivers/ram/rockchip/sdram_rk3399.c
-+++ b/drivers/ram/rockchip/sdram_rk3399.c
-@@ -1,3 +1,6 @@
-+#define DEBUG
-+#undef CONFIG_LOGLEVEL
-+#define CONFIG_LOGLEVEL 8
- // SPDX-License-Identifier: GPL-2.0+ OR BSD-3-Clause
- /*
-  * (C) Copyright 2016-2017 Rockchip Inc.
