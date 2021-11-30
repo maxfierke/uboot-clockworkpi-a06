@@ -6,32 +6,20 @@
 pkgname=uboot-clockworkpi-a06
 pkgver=2021.10
 pkgrel=1
-pkgdesc="U-Boot for ClockworkPI A06 (rockchip blobs, upstream u-boot)"
+_tfaver=2.6
+pkgdesc="U-Boot for ClockworkPI A06"
 arch=('aarch64')
 url='http://www.denx.de/wiki/U-Boot/WebHome'
 license=('GPL')
 provides=('uboot')
 conflicts=('uboot')
 install=${pkgname}.install
-# TODO: do this all via qemu-x86_64 on aarch64
-# makedepends=('git' 'arm-none-eabi-gcc' 'dtc' 'bc')
-# source=("https://ftp.denx.de/pub/u-boot/u-boot-${pkgver/rc/-rc}.tar.bz2"
-#         "rkbin::git+https://github.com/rockchip-linux/rkbin.git#commit=7d631e0d5b2d373b54d4533580d08fb9bd2eaad4"
-#         "0001-uboot-clockworkpi-a06.patch")
-# sha256sums=('cde723e19262e646f2670d25e5ec4b1b368490de950d4e26275a988c36df0bd4'
-#             'SKIP'
-#             'b82c97b89bc667bdd36327c834543bbf83dcdbf5aac016358a2e7c6cee2a1e2e')
-makedepends=()
-source=("idbloader.img"
-        "uboot.img"
-        "trust.img"
-        "u-boot-dtb.bin"
-        )
-sha256sums=("966698f160623f1d469bad96410c1a645614176a6ea341092ca696cf47a49b72"
-            "fc2a1485d3461ee9672f19a19b73c90c53724224d3aef72be8897f4552773a29"
-            "c82b6b7ea2160c7bdedcd5048b479bb5028434e0811c125fbc2b0080543a6f32"
-            "165ab726b1ab638a3d31e392b9fce8118fdd8674369abc386c14b1770a294f70"
-            )
+source=("https://ftp.denx.de/pub/u-boot/u-boot-${pkgver/rc/-rc}.tar.bz2"
+        "https://git.trustedfirmware.org/TF-A/trusted-firmware-a.git/snapshot/trusted-firmware-a-$_tfaver.tar.gz"
+        "0003-uboot-clockworkpi-a06.patch")
+sha256sums=('cde723e19262e646f2670d25e5ec4b1b368490de950d4e26275a988c36df0bd4'
+            '4e59f02ccb042d5d18c89c849701b96e6cf4b788709564405354b5d313d173f7'
+            '8b6d3477be3fc2832775ee6eaa12769e650b05efaac52a22dacfb72cac7c6a04')
 
 #prepare() {
 #  # Why doesn't this untar automatically?
@@ -43,11 +31,9 @@ sha256sums=("966698f160623f1d469bad96410c1a645614176a6ea341092ca696cf47a49b72"
 #  patch -Np1 -i "${srcdir}/0001-uboot-clockworkpi-a06.patch"
 #}
 
-# build() {
-  # Build idbloader.img
-  # cd "${srcdir}"
-  # rkbin/tools/mkimage -n rk3399 -T rksd -d rk3399_ddr_800MHz_v1.25.bin idbloader.img
-  # cat rkbin/bin/rk33/rk3399_miniloader_v1.26.bin >> idbloader.img
+  cd ./u-boot-${pkgver/rc/-rc}
+  patch -Np1 -i "${srcdir}/0003-uboot-clockworkpi-a06.patch"
+}
 
   # Build trust.img
   # cd rkbin/
