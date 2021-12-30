@@ -7,7 +7,7 @@
 
 pkgname=uboot-clockworkpi-a06
 pkgver=2021.10
-pkgrel=1
+pkgrel=2
 _tfaver=2.6
 pkgdesc="U-Boot for ClockworkPI A06"
 arch=('aarch64')
