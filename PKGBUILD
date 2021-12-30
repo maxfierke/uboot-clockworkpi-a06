@@ -22,7 +22,7 @@ source=("https://ftp.denx.de/pub/u-boot/u-boot-${pkgver/rc/-rc}.tar.bz2"
         "0001-uboot-clockworkpi-a06.patch")
 sha256sums=('cde723e19262e646f2670d25e5ec4b1b368490de950d4e26275a988c36df0bd4'
             '4e59f02ccb042d5d18c89c849701b96e6cf4b788709564405354b5d313d173f7'
-            'a075aeb700acb08ae61ca152610123e5e51f9bc65cd1f6bb8352aefef6bd1573')
+            '64fe6b045a5379a6562b28884c66523b45cc51c1cc093a50a0b98ec5c091769b')
 
 prepare() {
   # Why doesn't this untar automatically?
