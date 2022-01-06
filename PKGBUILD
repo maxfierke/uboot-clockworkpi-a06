@@ -1,13 +1,13 @@
 # U-Boot: ClockworkPI A06 based on PKGBUILD for RockPro64
-# Maintainer (this port): Max Fierke <max@maxfierke.com>
-# Maintainer (upstream): Dan Johansen <strit@manjaro.org>
-# Contributor (this port): Michael Gollnick
-# Contributor (upstream): Kevin Mihelich
-# Contributor (upstream): Adam <adam900710@gmail.com>
+# Maintainer: Dan Johansen <strit@manjaro.org>
+# Contributor: Max Fierke <max@maxfierke.com>
+# Contributor: Michael Gollnick
+# Contributor: Kevin Mihelich
+# Contributor: Adam <adam900710@gmail.com>
 
 pkgname=uboot-clockworkpi-a06
 pkgver=2021.10
-pkgrel=2
+pkgrel=1
 _tfaver=2.6
 pkgdesc="U-Boot for ClockworkPI A06"
 arch=('aarch64')
@@ -25,25 +25,40 @@ sha256sums=('cde723e19262e646f2670d25e5ec4b1b368490de950d4e26275a988c36df0bd4'
             '64fe6b045a5379a6562b28884c66523b45cc51c1cc093a50a0b98ec5c091769b')
 
 prepare() {
-  # Why doesn't this untar automatically?
-  if [ ! -d "u-boot-${pkgver/rc/-rc}" ]; then
-    tar -xf u-boot-${pkgver/rc/-rc}.tar
-  fi
-
-  cd ./u-boot-${pkgver/rc/-rc}
+  cd u-boot-${pkgver/rc/-rc}
   patch -Np1 -i "${srcdir}/0001-uboot-clockworkpi-a06.patch"
 }
 
 build() {
-  cd trusted-firmware-a-$_tfaver
+  # Avoid build warnings by editing a .config option in place instead of
+  # appending an option to .config, if an option is already present
+  update_config() {
+    if ! grep -q "^$1=$2$" .config; then
+      if grep -q "^# $1 is not set$" .config; then
+        sed -i -e "s/^# $1 is not set$/$1=$2/g" .config
+      elif grep -q "^$1=" .config; then
+        sed -i -e "s/^$1=.*/$1=$2/g" .config
+      else
+        echo "$1=$2" >> .config
+      fi
+    fi
+  }
+
   unset CFLAGS CXXFLAGS CPPFLAGS LDFLAGS
+  
+  cd trusted-firmware-a-$_tfaver
+  
+  echo -e "\nBuilding TF-A for ClockworkPI A60...\n"
   make PLAT=rk3399
   cp build/rk3399/release/bl31/bl31.elf ../u-boot-${pkgver/rc/-rc}
+  
   cd ../u-boot-${pkgver/rc/-rc}
-  unset CFLAGS CXXFLAGS CPPFLAGS LDFLAGS
+  
+  echo -e "\nBuilding U-Boot for Pine64 Pinebook Pro...\n"
   make clockworkpi-a06-rk3399_defconfig
-  echo 'CONFIG_IDENT_STRING=" Manjaro ARM"' >> .config
-  make EXTRAVERSION=-${pkgrel} all u-boot.itb
+  
+  update_config 'CONFIG_IDENT_STRING' '" Manjaro Linux ARM"'
+  make EXTRAVERSION=-${pkgrel}
 }
 
 package() {
@@ -51,5 +66,5 @@ package() {
 
   mkdir -p "${pkgdir}/boot/extlinux"
 
-  cp u-boot.itb idbloader.img "${pkgdir}/boot"
+  install -D -m 0644 idbloader.img u-boot.itb -t "${pkgdir}/boot"
 }
