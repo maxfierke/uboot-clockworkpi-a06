@@ -7,7 +7,7 @@
 
 pkgname=uboot-clockworkpi-a06
 pkgver=2021.10
-pkgrel=2
+pkgrel=3
 _tfaver=2.6
 pkgdesc="U-Boot for ClockworkPI A06"
 arch=('aarch64')
@@ -58,6 +58,7 @@ build() {
   make clockworkpi-a06-rk3399_defconfig
 
   update_config 'CONFIG_IDENT_STRING' '" Manjaro Linux ARM"'
+  update_config 'CONFIG_OF_LIBFDT_OVERLAY' 'y'
   make EXTRAVERSION=-${pkgrel}
 }
 
